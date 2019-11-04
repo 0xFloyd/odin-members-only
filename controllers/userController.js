@@ -46,7 +46,7 @@ exports.sign_up_post = [
                     password: hashedPassword
                 }).save(err => {
                     if (err) return next(err);
-                    res.redirect("/", {user: req.user});
+                    res.render("index", {user: req.user});
                 });
             });
         }
