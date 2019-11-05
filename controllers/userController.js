@@ -1,3 +1,5 @@
+var express = require('express');
+var router = express.Router();
 var User = require('../models/user');
 var Post = require('../models/post');
 const validator = require('express-validator');
@@ -10,6 +12,12 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+
+
+router.use(function (req, res, next) {
+    res.locals.currentUser = req.user;
+    next();
+});
 
 // this is what passport.autheticate() uses to authenticate by communicating with database 
 passport.use(new LocalStrategy(
@@ -45,14 +53,21 @@ passport.deserializeUser(function (id, done) {
 });
 
 exports.index = function (req, res) {
-    let user = req.user;
+    req.url = '/';
+    let user;
+    if (req.user) {
+        user = req.user;
+    }
+    else {
+        user = req.body.username;
+    }
    /* async.parallel({
         user_count: function (callback) {
             User.countDocuments({}, callback); // Pass an empty object as match condition to find all documents of this collection
         },
        
     }, function (err, results) { */
-        res.render('index', { title: 'Users', user: user /* error: err, data: results */});
+    res.render('index', { title: 'Home', user: user /* error: err, data: results */});
    // });
 };
 
@@ -72,7 +87,7 @@ exports.sign_up_post = [
         const errors = validator.validationResult(req);
         if (!errors.isEmpty()) {
             // There are errors. Render the form again with sanitized values/error messages.
-            res.render('sign-up', { title: 'Sign Up', errors: errors.array() });
+            res.render('index', { title: errors.array(), errors: errors.array() });
             return;
         }
         else {
@@ -84,7 +99,7 @@ exports.sign_up_post = [
                     password: hashedPassword
                 }).save(err => {
                     if (err) return next(err);
-                res.render("index", {user: user});
+                    res.render("index", { title: 'Welcome ' + req.body.username + '!', user: req.body});
                 });
             });
         }
@@ -95,10 +110,6 @@ exports.login_get = function (req, res, next) {
     res.render('log-in', { title: 'Log In' });
 };
 
-
-exports.success = function (req, res, next) {
-    res.render('sucess', { title: 'success' });
-};
 
 
 

@@ -48,8 +48,6 @@ passport.deserializeUser(function (id, done) {
 /* GET home page. */
 router.get('/', user_controller.index);
 
-router.get('/success', user_controller.success);
-
 router.get("/sign-up", user_controller.sign_up_get);
 
 router.post("/sign-up", user_controller.sign_up_post);
