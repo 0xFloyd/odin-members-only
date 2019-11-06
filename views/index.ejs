@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <% if (user) {%>
+    <% if (typeof user !== "undefined") {%>
         <h1>WELCOME <%= user.username %></h1>
         <a href="/log-out">LOG OUT</a>
     <% } else { %>

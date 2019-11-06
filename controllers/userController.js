@@ -13,6 +13,17 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const signupFailures = ({ location, msg, param, value, nestedErrors }) => {
+    return {
+        type: "Error",
+        name: "Signup Failure",
+        location: location,
+        message: msg,
+        param: param,
+        value: value,
+        nestedErrors: nestedErrors
+    }
+};
 
 router.use(function (req, res, next) {
     res.locals.currentUser = req.user;
@@ -58,7 +69,7 @@ exports.index = function (req, res) {
     if (req.user) {
         user = req.user;
     }
-    else {
+    if (req.body.username) {
         user = req.body.username;
     }
    /* async.parallel({
@@ -80,14 +91,20 @@ exports.sign_up_post = [
     validator.body('password', 'password required').isLength({ min: 1 }).trim(),
     validator.sanitizeBody('username').escape(),
     validator.sanitizeBody('password').escape(),
+    validator.body('password', 'password required').exists(),
+    validator.body('passwordConfirmation', 'Password Confirmation field must have the same value as the password field')
+        .exists()
+        .custom((value, { req }) => value === req.body.password),
+    
 
     (req, res, next) => {
 
         // Extract the validation errors from a request.
         const errors = validator.validationResult(req);
         if (!errors.isEmpty()) {
+            //console.log(errors.array()[0]['msg']);
             // There are errors. Render the form again with sanitized values/error messages.
-            res.render('index', { title: errors.array(), errors: errors.array() });
+            res.render('sign-up', { title: errors.array()[0]['msg'], errors: errors.array()[0]['msg'] });
             return;
         }
         else {
