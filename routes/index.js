@@ -9,6 +9,7 @@ var user_controller = require('../controllers/userController');
 
 router.use(function (req, res, next) {
     res.locals.currentUser = req.user;
+    console.log(res.locals.currentUser);
     next();
 });
 
@@ -50,16 +51,21 @@ router.get('/', user_controller.index);
 
 router.get("/sign-up", user_controller.sign_up_get);
 
-router.post("/sign-up", user_controller.sign_up_post);
+router.post("/sign-up", user_controller.sign_up_post, passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in"
+}));
 
 router.get("/log-in", user_controller.login_get);
 
 router.post("/log-in", 
     passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/"
+    failureRedirect: "/log-in"
     })
 );
+
+router.get("/members", user_controller.members_get);
 
 
 // logiut route. req.logout is part of the passport middleware 

@@ -25,10 +25,6 @@ const signupFailures = ({ location, msg, param, value, nestedErrors }) => {
     }
 };
 
-router.use(function (req, res, next) {
-    res.locals.currentUser = req.user;
-    next();
-});
 
 // this is what passport.autheticate() uses to authenticate by communicating with database 
 passport.use(new LocalStrategy(
@@ -78,7 +74,7 @@ exports.index = function (req, res) {
         },
        
     }, function (err, results) { */
-    res.render('index', { title: 'Home', user: user /* error: err, data: results */});
+    res.render('index', { title: 'Home', user: res.locals.currentUser /* error: err, data: results */});
    // });
 };
 
@@ -116,12 +112,17 @@ exports.sign_up_post = [
                     password: hashedPassword
                 }).save(err => {
                     if (err) return next(err);
-                    res.render("index", { title: 'Welcome ' + req.body.username + '!', user: req.body});
-                });
-            });
+                    next();
+                });    
+            });  
         }
     }
 ];
+
+exports.members_get = function (req, res, next) {
+    res.render('members', { title: 'Members Only', user: res.locals.currentUser });
+};
+
 
 exports.login_get = function (req, res, next) {
     res.render('log-in', { title: 'Log In' });
@@ -130,13 +131,21 @@ exports.login_get = function (req, res, next) {
 
 
 
+/*
+
+
+if (err) return next(err);
+passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in"
+})
+
+                    //res.render("index", { title: `Welcome!`, user: newUser });   
+                });
 
 
 
-
-
-
-
+*/
 
 
 
