@@ -7,8 +7,8 @@
 </head>
 
 <body>
-    <% if (typeof user !== "undefined") {%>
-        <h1>WELCOME <%= user.username %></h1>
+    <% if (currentUser) {%>
+        <h1>WELCOME <%= currentUser.username %></h1>
         <p>Are you a member? <a href="/members">Enter here</a></p>
         <a href="/log-out">LOG OUT</a>
     <% } else { %>
