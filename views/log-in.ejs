@@ -7,15 +7,20 @@
 </head>
 
 <body>
-    <h1><%= title %></h1>
-    <form action="" method="POST">
-        <label for="username">Username</label>
-        <input name="username" placeholder="username" type="text">
-        <label for="password">Password</label>
-        <input name="password" type="password">
-        <button>Login</button>
-    </form>
-    Not registered?? <a href="/sign-up">Sign Up</a>
+    <% if (currentUser) {%>
+        <h1>You are already logged in as  <%= currentUser.username %></h1>
+        Return <a href="/">Home</a>
+    <% } else { %>
+        <h1><%= title %></h1>
+        <form action="" method="POST">
+            <label for="username">Username</label>
+            <input name="username" placeholder="username" type="text">
+            <label for="password">Password</label>
+            <input name="password" type="password">
+            <button>Login</button>
+        </form>
+        Not registered?? <a href="/sign-up">Sign Up</a>
+    <%} %>
 </body>
 
 </html>

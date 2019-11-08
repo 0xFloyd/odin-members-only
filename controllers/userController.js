@@ -119,6 +119,8 @@ exports.sign_up_post = [
     }
 ];
 
+
+
 exports.members_get = function (req, res, next) {
     res.render('members', { title: 'Members Only', user: res.locals.currentUser });
 };

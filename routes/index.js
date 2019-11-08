@@ -61,7 +61,7 @@ router.get("/log-in", user_controller.login_get);
 router.post("/log-in", 
     passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/log-in"
+    failureRedirect: "/"
     })
 );
 
