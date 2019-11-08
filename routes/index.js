@@ -7,6 +7,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const bcrypt = require("bcryptjs");
 var user_controller = require('../controllers/userController');
 
+
 router.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     console.log(res.locals.currentUser);
@@ -19,7 +20,7 @@ passport.use(new LocalStrategy(
         User.findOne({ username: username }, function (err, user) {
             if (err) { return done(err); }
             if (!user) {
-                return done(null, false, { message: 'Incorrect username.' });
+                return done(null, false, { msg: 'Incorrect username.' });
             }
             bcrypt.compare(password, user.password, (err, res) => {
                 if (res) {
@@ -30,7 +31,6 @@ passport.use(new LocalStrategy(
                     return done(null, false, { msg: "Incorrect password" })
                 }
             })
-            return done(null, user);
         });
     }
 ));
@@ -53,17 +53,18 @@ router.get("/sign-up", user_controller.sign_up_get);
 
 router.post("/sign-up", user_controller.sign_up_post, passport.authenticate("local", {
     successRedirect: "/",
-    failureRedirect: "/log-in"
+    failureRedirect: "/sign-up"
 }));
 
 router.get("/log-in", user_controller.login_get);
 
-router.post("/log-in", 
+router.post("/log-in",
     passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/"
+        successRedirect: "/",
+        failureRedirect: "/log-in"
     })
 );
+    
 
 router.get("/members", user_controller.members_get);
 

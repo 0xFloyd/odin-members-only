@@ -13,17 +13,7 @@ const LocalStrategy = require("passport-local").Strategy;
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const signupFailures = ({ location, msg, param, value, nestedErrors }) => {
-    return {
-        type: "Error",
-        name: "Signup Failure",
-        location: location,
-        message: msg,
-        param: param,
-        value: value,
-        nestedErrors: nestedErrors
-    }
-};
+
 
 
 // this is what passport.autheticate() uses to authenticate by communicating with database 
@@ -40,7 +30,7 @@ passport.use(new LocalStrategy(
                     return done(null, user)
                 } else {
                     // passwords do not match!
-                    return done(null, false, { msg: "Incorrect password" })
+                    return done(null, false, { message: "Incorrect password" })
                 }
             })
             return done(null, user);
@@ -121,6 +111,9 @@ exports.sign_up_post = [
 
 
 
+
+
+
 exports.members_get = function (req, res, next) {
     res.render('members', { title: 'Members Only', user: res.locals.currentUser });
 };
@@ -131,39 +124,3 @@ exports.login_get = function (req, res, next) {
 };
 
 
-
-
-/*
-
-
-if (err) return next(err);
-passport.authenticate("local", {
-    successRedirect: "/",
-    failureRedirect: "/log-in"
-})
-
-                    //res.render("index", { title: `Welcome!`, user: newUser });   
-                });
-
-
-
-*/
-
-
-
-
-
-   
-/*
-// Display list of all Books.
-exports.post_list = function (req, res, next) {
-    Post.find({}, 'title description')
-        .populate('user')
-        .exec(function (err, list_posts) {
-            if (err) { return next(err); }
-            //Successful, so render
-            res.render('index', { title: 'Post List', post_list: list_posts });
-        });
-
-};
-*/
