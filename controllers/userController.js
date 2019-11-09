@@ -50,12 +50,16 @@ passport.deserializeUser(function (id, done) {
 });
 
 exports.index = function (req, res, next) {
+    if (res.locals.currentUser) {
+        console.log(res.locals.currentUser);
+    }
+    
     
     Message.find()
         .populate('user')
         .exec(function (err, list_message) {
             if (err) { return next(err); }
-            res.render('index', {title: 'Home', user: res.locals.currentUser, error: err, message_list: list_message });
+            res.render('index', {title: 'Club Memba', user: res.locals.currentUser, error: err, message_list: list_message });
     });
 };
 
@@ -109,13 +113,19 @@ exports.members_post = [
 
     body('memberPassword', 'Password must not be empty.').isLength({ min: 1 }).trim(),
     sanitizeBody('memberPassword').escape(),
-
     // Process request after validation and sanitization.
     (req, res, next) => {
-
+        
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        
+        if (typeof req.body.admin === "undefined") {
+            admin= false;
+        } 
+
+        else {
+            admin = true;
+        } 
+
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
             res.render('members', { title: 'Members Form failure'});
@@ -129,7 +139,7 @@ exports.members_post = [
         
         else {
             // Data from form is valid. Update the record.
-            User.findByIdAndUpdate(res.locals.currentUser._id, { $set: { "member": true } }, function (err, callback) {
+            User.findByIdAndUpdate(res.locals.currentUser._id, { $set: { "member": true, "admin": admin } }, function (err, callback) {
                 if (err) { 
                     return next(err); }
                 // Successful - redirect 
@@ -184,6 +194,8 @@ exports.message_delete_post = function (req, res, next) {
         res.redirect('/')
     })    
 };
+
+
 
 
 

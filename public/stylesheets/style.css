@@ -23,3 +23,14 @@ a {
    display: inline;
 }
 
+.blurredText {
+  background-color:rgba(0, 0, 0);
+}
+
+.blurredText::selection {
+  background-color:rgba(0, 0, 0);
+}
+
+.blurredText::-moz-selection {
+  background-color:rgba(0, 0, 0);
+}

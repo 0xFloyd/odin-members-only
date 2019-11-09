@@ -34,5 +34,4 @@ module.exports = mongoose.model("Message", MessageSchema);
             <%}%>
             -->
 
-            <button class="removeMessageButton" value="<%= message.id %>"> X </button>
 */
