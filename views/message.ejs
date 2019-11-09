@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+
+<body>
+    <% if (!currentUser) {%>
+        <h1>You must be logged in as a member to view this page.</h1>
+        Return <a href="/">Home</a>
+    <% } else { %>
+        <% if (!currentUser.member) {%>
+            <h1>You must be logged in as a member to view this page.</h1>
+            Return <a href="/">Home</a>
+        <% } else { %> 
+            <h1><%= title + currentUser.username%>! Please enter your message.</h1>
+            <form action="" method="POST" id="messageForm">
+                <label for="messageBody">Enter Message</label>
+                <br>
+                <textarea rows="4" cols="60" name="messageBody" form="messageForm"></textarea>
+                <button>Post message</button>
+            </form>
+        <%} %>
+    <%} %>
+</body>
+
+</html>

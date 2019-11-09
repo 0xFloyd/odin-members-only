@@ -9,9 +9,22 @@
 <body>
     <% if (currentUser) {%>
         <h1>WELCOME <%= currentUser.username %></h1>
-        <p>Are you a member? <a href="/members">Enter here</a></p>
+        <% if (currentUser.member) {%>
+            <p>You are currently logged in as a member! Woo!! </p>
+            <p>Click <a href="/message">here</a> to post a message.</p>
+            <% if (message_list) {%>
+                <p>MESSAGES found!!!!!!!!!!!!!!!!</p>
+                <% message_list.forEach(function(message) { %>
+                    <li><%= message.message %></li>
+                <% }); %>
+            <% } else {%>
+                <p>No messages found</p>
+            <%}%>
+        <% } else {%>
+            <p>Are you a member? <a href="/members">Enter here</a></p>
+        <%}%>
         <a href="/log-out">LOG OUT</a>
-    <% } else { %>
+    <% } else {%>
         <h1><%= title %></h1>
         <p>Not registered? <a href="/sign-up">Sign Up</a></p>
         <p>Already a user? <a href="/log-in">Log In</a></p>

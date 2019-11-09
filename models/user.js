@@ -6,7 +6,8 @@ var UserSchema = new Schema({
     //firstname: { type: String, required: true }, 
     //lastname: { type: String, required: true },
     username: { type: String, required: true },
-    password: { type: String, required: true }, // We use default to set the default status for newly created bookinstances
+    password: { type: String, required: true },
+    member: { type: Boolean, default: false  } // We use default to set the default status for newly created bookinstances
 });
 
 UserSchema.validPassword = function (password) {
