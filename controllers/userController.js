@@ -102,7 +102,7 @@ exports.sign_up_post = [
 
 
 exports.members_get = function (req, res, next) {
-    res.render('members', { title: 'Members Only', user: res.locals.currentUser });
+    res.render('members', { title: 'Become a member', user: res.locals.currentUser });
 };
 
 exports.members_post = [
@@ -115,20 +115,22 @@ exports.members_post = [
 
         // Extract the validation errors from a request.
         const errors = validationResult(req);
-        if (req.body.memberPassword) {
-            //console.log(res.locals.currentUser);
-        }
         
         if (!errors.isEmpty()) {
             // There are errors. Render form again with sanitized values/error messages.
             res.render('members', { title: 'Members Form failure'});
             return;
         }
+
+        if (req.body.memberPassword != 'secret') {
+            res.render('members', { title: 'Incorrect member password' });
+            return;
+        }
+        
         else {
             // Data from form is valid. Update the record.
             User.findByIdAndUpdate(res.locals.currentUser._id, { $set: { "member": true } }, function (err, callback) {
                 if (err) { 
-                    console.log('USer fine error');
                     return next(err); }
                 // Successful - redirect 
                 res.redirect('/');
@@ -174,6 +176,15 @@ exports.message_post = [
         }
     }
 ];
+
+exports.message_delete_post = function (req, res, next) {
+    Message.findByIdAndRemove(req.body.messageId, function deleteMessage(err) {
+        if (err) { return next(err); }
+        // Success - go to author list
+        res.redirect('/')
+    })    
+};
+
 
 
 

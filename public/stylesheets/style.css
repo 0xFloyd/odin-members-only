@@ -6,3 +6,20 @@ body {
 a {
   color: #00B7FF;
 }
+
+.messageContainer {
+  display: inline;
+}
+
+.messageDeleteForm {
+  display: inline !important;
+}
+
+.messageDeleteButton {
+  display: inline;
+}
+
+.messageDeleteInput {
+   display: inline;
+}
+

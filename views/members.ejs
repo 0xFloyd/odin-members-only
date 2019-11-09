@@ -12,7 +12,7 @@
             <h1>Welcome Special Member<%= currentUser.username %>, you are already registered.</h1>
             Return <a href="/">Home</a>
         <% } else { %>
-        <h1>WELCOME <%= currentUser.username %></h1>
+        <h1><%= title %></h1>
         <form action="" method="POST">
             <label for="memberPassword">Member Code</label>
             <input name="memberPassword" type="text">
@@ -21,7 +21,7 @@
         Not a member? Return <a href="/">Home</a>
         <%} %>
     <% } else { %>
-    <h1><%= title %></h1>
+    <h1>Please log in to view the members form.</h1>
         <p>Not registered? <a href="/sign-up">Sign Up</a></p>
         <p>Already a user? <a href="/log-in">Log In</a></p>
     <%} %>

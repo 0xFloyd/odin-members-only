@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <title></title>
-</head>
+<%- include('header') -%>
 
 <body>
     <% if (currentUser) {%>
-        <h1>WELCOME <%= currentUser.username %></h1>
+        <h1>Welcome <%= currentUser.username %></h1>
         <% if (currentUser.member) {%>
-            <p>You are currently logged in as a member! Woo!! </p>
-            <p>Click <a href="/message">here</a> to post a message.</p>
+            <p>You are currently a member. Click <a href="/message">here</a> to add a new message.</p>
             <% if (message_list) {%>
-                <p>MESSAGES found!!!!!!!!!!!!!!!!</p>
                 <% message_list.forEach(function(message) { %>
-                    <li><%= message.message %></li>
+                    <p class="messageContainer"><%= message.message %>. - posted on <%= message.date_formatted %> by <%= message.user.username %><form class="messageDeleteForm" action="" method="POST"><input class="messageDeleteInput" type="hidden" name="messageId" value="<%= message.id %>"/><button class="messageDeleteButton">X</button></form></p>
                 <% }); %>
             <% } else {%>
                 <p>No messages found</p>
             <%}%>
         <% } else {%>
             <p>Are you a member? <a href="/members">Enter here</a></p>
+            <% if (message_list) {%>
+                <h3>Become a member to see who posts each messages!</h3>
+                <% message_list.forEach(function(message) { %>
+                    <p><%= message.message %>. - posted on <%= message.date_formatted %></p>
+                <% }); %>
+            <% } else {%>
+                <p>No messages found</p>
+            <%}%>
         <%}%>
+        <br>
         <a href="/log-out">LOG OUT</a>
     <% } else {%>
         <h1><%= title %></h1>

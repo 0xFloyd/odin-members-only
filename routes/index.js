@@ -51,6 +51,8 @@ passport.deserializeUser(function (id, done) {
 /* GET home page. */
 router.get('/', user_controller.index);
 
+router.post('/', user_controller.message_delete_post)
+
 router.get("/sign-up", user_controller.sign_up_get);
 
 router.post("/sign-up", user_controller.sign_up_post, passport.authenticate("local", {
@@ -74,7 +76,6 @@ router.post("/members", user_controller.members_post);
 router.get("/message", user_controller.message_get);
 
 router.post("/message", user_controller.message_post);
-
 
 // logiut route. req.logout is part of the passport middleware 
 router.get("/log-out", (req, res) => {
