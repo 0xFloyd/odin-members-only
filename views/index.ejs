@@ -10,6 +10,11 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
             <ul class="navbar-nav ml-auto">
             <% if (currentUser) {%>
                 <li class="nav-item">
@@ -39,7 +44,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-12">
                 <% if (currentUser) {%>
-                    <h1>Welcome <%= currentUser.username %></h1>
+                    <h1>Welcome <%= currentUser.username %>!</h1>
                     <% if (currentUser.member) {%>
                         <a href="/message"><button class="btn btn-primary">New Message</button></a>
                         <% if (message_list) {%>
@@ -56,20 +61,28 @@
                                 <% }); %>
                             <% } else {%>
                                 <% message_list.forEach(function(message) { %>
-                                    <p><%= message.message %>. - posted on <%= message.date_formatted %> by
-                                        <%= message.user.username %>
-                                    </p>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="card-text"><%= message.message %></p>
+                                            <h6 class="card-subtitle text-muted"><%= message.date_formatted %> by <%= message.user.username %></h6>
+                                        </div>
+                                    </div>
                                 <% }); %>
                             <%}%>
                         <% } else {%>
                             <p>No messages found</p>
                         <%}%>
                     <% } else {%>
-                        <p>Are you a member? <a href="/members">Enter here</a></p>
                         <% if (message_list) {%>
-                            <h3>Become a member to see who posts messages!</h3>
+                            <h3>Become a <a href="/members">member</a> to see who posts messages!</h3>
+                            <a href="/message"><button class="btn btn-primary">New Message</button></a>
                             <% message_list.forEach(function(message) { %>
-                                <p><%= message.message %>. - posted on <%= message.date_formatted %></p>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <p class="card-text"><%= message.message %></p>
+                                        <h6 class="card-subtitle text-muted"><%= message.date_formatted %> by <span style="font-style: italic;"><a href="/members">anonymous</a></span></h6>
+                                    </div>
+                                </div>
                             <% }); %>
                         <% } else {%>
                             <p>No messages found</p>
@@ -78,14 +91,15 @@
                     <br>
                     <a href="/log-out"><button class="btn btn-primary">Log Out</button></a>
                 <% } else {%>
-                    <p>Not registered? <a href="/sign-up">Sign Up</a></p>
-                    <p>Already a user? <a href="/log-in">Log In</a></p>
-                    <h1><%= title %></h1>
-                    <br>
                     <% if (message_list) {%>
-                        <h3>Log in to Club Memba to see messages!</h3>
+                        <h3><a href="/log-in">Log in</a> to Club Memba to see messages!</h3>
                         <% message_list.forEach(function(message) { %>
-                            <p><span class="blurredText"><%= message.message %>.</span> - posted on <%= message.date_formatted %></p>
+                            <div class="card">
+                                <div class="card-body">
+                                    <p class="card-text"><span class="blurredText"><%= message.message %></span></p>
+                                    <h6 class="card-subtitle text-muted"><%= message.date_formatted %></h6>
+                                </div>
+                            </div>
                         <% }); %>
                     <% } else {%>
                         <p>No messages found</p>
@@ -93,7 +107,12 @@
                 <%}%>
             </div>
         </div>
+        <hr>
     </div>
+    <hr>
+    <nav class="navbar fixed-bottom navbar-light custom-footer">
+        <a class="mx-auto navbar-brand" href="/">Created by Ryan Floyd</a>
+    </nav>
     <%- include('bootstrap-script') -%>
 </body>
 </html>

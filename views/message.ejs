@@ -4,6 +4,40 @@
 <%- include('header') -%>
 
 <body>
+     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <% if (currentUser) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-out">Log Out</a>
+                </li>
+                    <% if (!currentUser.member) {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members">Member Login</a>
+                        </li>
+                    <% } else {%>
+    
+                    <%}%>
+                <% } else {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign-up">Sign Up</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/log-in">Log In</a>
+                    </li>
+                <%}%>
+            </ul>
+        </div>
+    </nav>
     <% if (!currentUser) {%>
         <h1>You must be logged in as a member to view this page.</h1>
         Return <a href="/">Home</a>

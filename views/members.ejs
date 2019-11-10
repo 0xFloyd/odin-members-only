@@ -4,27 +4,72 @@
 <%- include('header') -%>
 
 <body>
-   <% if (currentUser) {%>
-        <% if (currentUser.member) {%>
-            <h1>Welcome Special Member<%= currentUser.username %>, you are already registered.</h1>
-            Return <a href="/">Home</a>
-        <% } else { %>
-        <h1><%= title %></h1>
-        <form action="" method="POST">
-            <label for="memberPassword">Member Code</label>
-            <input name="memberPassword" type="text">
-            <input name="admin" type="checkbox" id="adminCheckbox">
-            <label for="admin">Administrator</label>
-            <br>
-            <button>Become Member</button>
-        </form>
-        Not a member? Return <a href="/">Home</a>
-        <%} %>
-    <% } else { %>
-    <h1>Please log in to view the members form.</h1>
-        <p>Not registered? <a href="/sign-up">Sign Up</a></p>
-        <p>Already a user? <a href="/log-in">Log In</a></p>
-    <%} %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <% if (currentUser) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-out">Log Out</a>
+                </li>
+                <% if (!currentUser.member) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/members">Member Login</a>
+                </li>
+                <% } else {%>
+    
+                <%}%>
+                    <% } else {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/sign-up">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-in">Log In</a>
+                </li>
+                <%}%>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Club Memba</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+            <% if (currentUser) {%>
+                <% if (currentUser.member) {%>
+                    <h1>Welcome Special Member<%= currentUser.username %>, you are already registered.</h1>
+                    Return <a href="/">Home</a>
+                <% } else { %>
+                <h3><%= title %></h1>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="memberPassword">Member Code</label>
+                        <input class="form-control" name="memberPassword" type="text">
+                    </div>
+                
+                    <input name="admin" type="checkbox" id="adminCheckbox">
+                    <label for="admin">Administrator</label>
+                
+                    <br>
+                    <button class="btn btn-primary">Become Member</button>
+                </form>
+                <br>
+                <p>Not a member? Return <a href="/">Home</a></p>
+                <%} %>
+            <% } else { %>
+            <h1>Please log in to view the members form.</h1>
+                <p>Not registered? <a href="/sign-up">Sign Up</a></p>
+                <p>Already a user? <a href="/log-in">Log In</a></p>
+            <%} %>
     <%- include('bootstrap-script') -%>
 </body>
 </html>

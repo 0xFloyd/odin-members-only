@@ -4,20 +4,65 @@
 <%- include('header') -%>
 
 <body>
-    <% if (currentUser) {%>
-        <h1>You are already logged in as  <%= currentUser.username %></h1>
-        Return <a href="/">Home</a>
-    <% } else { %>
-        <h1><%= title %></h1>
-        <form action="" method="POST">
-            <label for="username">Username</label>
-            <input name="username" placeholder="username" type="text">
-            <label for="password">Password</label>
-            <input name="password" type="password">
-            <button>Login</button>
-        </form>
-        Not registered?? <a href="/sign-up">Sign Up</a>
-    <%} %>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <% if (currentUser) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-out">Log Out</a>
+                </li>
+                    <% if (!currentUser.member) {%>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/members">Member Login</a>
+                        </li>
+                    <% } else {%>
+    
+                    <%}%>
+                <% } else {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/sign-up">Sign Up</a>
+                    </li>
+                <%}%>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Club Memba</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <% if (currentUser) {%>
+                <h1>You are already logged in as <%= currentUser.username %></h1>
+                Return <a href="/">Home</a>
+                <% } else { %>
+                <h1><%= title %></h1>
+                <form action="" method="POST">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input class="form-control" name="username" placeholder="username" type="text">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input class="form-control" name="password" type="password">
+                    </div>
+                    <button class="btn btn-primary">Log in</button>
+                </form>
+                <br>
+                <p>Not registered? <a href="/sign-up">Sign Up</a></p>
+                <%} %>
+            </div>
+        </div>
+    </div>
     <%- include('bootstrap-script') -%>
 </body>
 
