@@ -8,6 +8,7 @@ const bcrypt = require("bcryptjs");
 var user_controller = require('../controllers/userController');
 
 
+
 router.use(function (req, res, next) {
     res.locals.currentUser = req.user;
     if (res.locals.currentUser) {

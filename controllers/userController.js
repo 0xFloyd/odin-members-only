@@ -59,6 +59,11 @@ exports.index = function (req, res, next) {
         .populate('user')
         .exec(function (err, list_message) {
             if (err) { return next(err); }
+            list_message.forEach((message) => {
+                message.message = decodeURIComponent(message.message);
+                console.log(message.message);
+            })
+
             res.render('index', {title: 'Club Memba', user: res.locals.currentUser, error: err, message_list: list_message });
     });
 };
@@ -105,6 +110,7 @@ exports.sign_up_post = [
 ];
 
 
+//refresh comment  
 exports.members_get = function (req, res, next) {
     res.render('members', { title: 'Become a member', user: res.locals.currentUser });
 };
@@ -160,7 +166,7 @@ exports.message_get = function (req, res, next) {
 };
 
 exports.message_post = [
-    validator.body('messageBody', 'MEssage required').isLength({ min: 1 }).trim(),
+    validator.body('messageBody', 'Message required').isLength({ min: 1 }).trim(),
     validator.sanitizeBody('messageBody').escape(),
   
 
