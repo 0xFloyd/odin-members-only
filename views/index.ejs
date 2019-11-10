@@ -4,17 +4,55 @@
 <%- include('header') -%>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+            <% if (currentUser) {%>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-out">Log Out</a>
+                </li>
+                <% if (!currentUser.member) {%>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/members">Member Login</a>
+                    </li>  
+                <% } else {%>
+                
+                <%}%>
+            <% } else {%>
+                <li class="nav-item">
+                    <a class="nav-link"  href="/sign-up">Sign Up</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/log-in">Log In</a>
+                </li>
+            <%}%>
+            </ul>
+        </div>
+    </nav>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-lg-10 col-xs-12">
+            <h1>Club Memba</h1>
+        <div class="row justify-content-center">
+            <div class="col-lg-12">
                 <% if (currentUser) {%>
                     <h1>Welcome <%= currentUser.username %></h1>
                     <% if (currentUser.member) {%>
-                        <p>You are currently a member. Click <a href="/message">here</a> to add a new message.</p>
+                        <a href="/message"><button class="btn btn-primary">New Message</button></a>
                         <% if (message_list) {%>
                             <% if (currentUser.admin) {%>
                                 <% message_list.forEach(function(message) { %>
-                                    <p class="messageContainer"><%= message.message %>. - posted on <%= message.date_formatted %> by <%= message.user.username %><form class="messageDeleteForm" action="" method="POST"><input class="messageDeleteInput" type="hidden" name="messageId" value="<%= message.id %>"/><button class="messageDeleteButton">X</button></form></p>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <p class="card-text"><%= message.message %></p>
+                                            <h6 class="card-subtitle text-muted"><%= message.date_formatted %> by <%= message.user.username %></h6>
+                                            <form class="messageDeleteForm" action="" method="POST"><input class="messageDeleteInput" type="hidden" name="messageId"
+                                                    value="<%= message.id %>" /><button class="messageDeleteButton">x</button></form>
+                                        </div>
+                                    </div>
                                 <% }); %>
                             <% } else {%>
                                 <% message_list.forEach(function(message) { %>
@@ -38,7 +76,7 @@
                         <%}%>
                     <%}%>
                     <br>
-                    <a href="/log-out">LOG OUT</a>
+                    <a href="/log-out"><button class="btn btn-primary">Log Out</button></a>
                 <% } else {%>
                     <p>Not registered? <a href="/sign-up">Sign Up</a></p>
                     <p>Already a user? <a href="/log-in">Log In</a></p>

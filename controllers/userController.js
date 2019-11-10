@@ -110,7 +110,7 @@ exports.sign_up_post = [
 ];
 
 
-//refresh comment  
+//refresh comment
 exports.members_get = function (req, res, next) {
     res.render('members', { title: 'Become a member', user: res.locals.currentUser });
 };
