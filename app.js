@@ -13,11 +13,6 @@ var User = require('./models/user');
 
 var indexRouter = require('./routes/index');
 
-const result = dotenv.config()
-
-if (result.error) {
-    throw result.error
-}
 
 
 var app = express();
