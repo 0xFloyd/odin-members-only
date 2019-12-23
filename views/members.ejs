@@ -52,7 +52,7 @@
                 <h3><%= title %></h1>
                 <form action="" method="POST">
                     <div class="form-group">
-                        <label for="memberPassword">Member Code</label>
+                        <label for="memberPassword">Member Code (it's "secret")</label>
                         <input class="form-control" name="memberPassword" type="text">
                     </div>
                 
@@ -70,6 +70,9 @@
                 <p>Not registered? <a href="/sign-up">Sign Up</a></p>
                 <p>Already a user? <a href="/log-in">Log In</a></p>
             <%} %>
+        </div>
+    </div>
+    <%- include('footer') -%>
     <%- include('bootstrap-script') -%>
 </body>
 </html>

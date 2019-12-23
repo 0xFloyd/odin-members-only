@@ -51,7 +51,10 @@ passport.deserializeUser(function (id, done) {
 
 exports.index = function (req, res, next) {
     if (res.locals.currentUser) {
-        console.log(res.locals.currentUser);
+        console.log("Current user is: " + res.locals.currentUser);
+    }
+    else {
+        console.log("No current user logged in");
     }
     
     
@@ -61,7 +64,6 @@ exports.index = function (req, res, next) {
             if (err) { return next(err); }
             list_message.forEach((message) => {
                 message.message = decodeURIComponent(message.message);
-                console.log(message.message);
             })
 
             res.render('index', {title: 'Club Memba', user: res.locals.currentUser, error: err, message_list: list_message });
@@ -160,6 +162,30 @@ exports.members_post = [
 exports.login_get = function (req, res, next) {
     res.render('log-in', { title: 'Log In' });
 };
+
+exports.login_post = [
+    validator.body('username', 'username required').isLength({ min: 1 }).trim(),
+    validator.body('password', 'password required').isLength({ min: 1 }).trim(),
+    validator.sanitizeBody('username').escape(),
+    validator.sanitizeBody('password').escape(),
+
+
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validator.validationResult(req);
+        if (!errors.isEmpty()) {
+            //console.log(errors.array()[0]['msg']);
+            // There are errors. Render the form again with sanitized values/error messages.
+            res.render('log-in', { title: errors.array()[0]['msg'], errors: errors.array()[0]['msg'] });
+            return;
+        }
+        else {
+            console.log("Log in post worked");
+            next();
+        }
+    }
+];
 
 exports.message_get = function (req, res, next) {
     res.render('message', { title: 'Welcome ' });

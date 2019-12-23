@@ -89,7 +89,6 @@
                         <%}%>
                     <%}%>
                     <br>
-                    <a href="/log-out"><button class="btn btn-primary">Log Out</button></a>
                 <% } else {%>
                     <% if (message_list) {%>
                         <h3><a href="/log-in">Log in</a> to Club Memba to see messages!</h3>
@@ -107,12 +106,9 @@
                 <%}%>
             </div>
         </div>
-        <hr>
+        <%- include('footer') -%>
     </div>
-    <hr>
-    <nav class="navbar fixed-bottom navbar-light custom-footer">
-        <a class="mx-auto navbar-brand" href="/">Created by Ryan Floyd</a>
-    </nav>
+
     <%- include('bootstrap-script') -%>
 </body>
 </html>

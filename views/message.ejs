@@ -38,21 +38,31 @@
             </ul>
         </div>
     </nav>
-    <% if (!currentUser) {%>
-        <h1>You must be logged in as a member to view this page.</h1>
-        Return <a href="/">Home</a>
-    <% } else { %>
-        <% if (!currentUser.member) {%>
-            <h1>You must be logged in as a member to view this page.</h1>
-            Return <a href="/">Home</a>
-        <% } else { %> 
-            <h1><%= title + currentUser.username%>! Please enter your message.</h1>
-            <form action="" method="POST" id="messageForm">
-                <label for="messageBody">Enter Message</label>
-                <br>
-                <textarea rows="4" cols="60" name="messageBody" form="messageForm"></textarea>
-                <button>Post message</button>
-            </form>
+    <div class="container">
+        <div class="row justify-content-center">
+            <h1>Club Memba</h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <% if (!currentUser) {%>
+                    <h3>You must be logged in as a member to view this page.</h3>
+                    Return <a href="/">Home</a>
+                <% } else { %>
+                    <% if (!currentUser.member) {%>
+                        <h3>You must be logged in as a member to view this page.</h3>
+                        Return <a href="/">Home</a>
+                    <% } else { %> 
+                        <h3><%= title + currentUser.username%>! Please enter your message.</h3>
+                    <form action="" method="POST" id="messageForm">
+                        <div class="form-group">
+                            <label for="messageBody">Enter Message</label>
+                            <br>
+                            <textarea rows="4" cols="20" name="messageBody" form="messageForm"></textarea>
+                        </div>
+                        <button class="btn btn-primary">Post Message</button>
+                    </form>
+                </div>
+            </div>
         <%} %>
     <%} %>
     <%- include('bootstrap-script') -%>

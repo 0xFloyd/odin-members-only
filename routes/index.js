@@ -63,7 +63,7 @@ router.post("/sign-up", user_controller.sign_up_post, passport.authenticate("loc
 
 router.get("/log-in", user_controller.login_get);
 
-router.post("/log-in",
+router.post("/log-in", user_controller.login_post,
     passport.authenticate("local", {
         successRedirect: "/",
         failureRedirect: "/log-in"
