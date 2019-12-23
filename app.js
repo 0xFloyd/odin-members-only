@@ -13,8 +13,6 @@ var User = require('./models/user');
 
 var indexRouter = require('./routes/index');
 
-
-
 var app = express();
 
 //Set up mongoose connection
